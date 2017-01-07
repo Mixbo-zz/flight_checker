@@ -67,7 +67,7 @@ def main():
             price_color = "\x1B[32m"
         elif price_int <= 200:
             price_color = "\x1B[33m"
-        print price_color+dst.price+" \x1B[0m"+dst.city_to+"\x1B[31m"+'\x20'*(max_size_city - len(dst.city_to))+" <--> \x1B[0m"+dst.city_from+"\x1B[0m"
+        print price_color+dst.price+" \x1B[0m"+dst.city_to+"\x1B[31m"+'\x20'*(max_size_city - len(dst.city_to))+" <--> \x1B[0m"+dst.city_from+"\x1B[31m || \x1B[0m"+dst.link
 
 if __name__ == "__main__":
     main()
