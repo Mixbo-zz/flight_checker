@@ -59,7 +59,7 @@ def main():
     for x in destinations:
         if len(x.city_to) > max_size_city:
             max_size_city = len(x.city_to)
-    destinations = sorted(destinations, key=lambda Destination: Destination.price)
+    destinations = sorted(destinations, key=lambda Destination: int(Destination.price[:-1]))
     for dst in destinations:
         price_color = "\x1B[31m"
         price_int = int(dst.price[:-1])
