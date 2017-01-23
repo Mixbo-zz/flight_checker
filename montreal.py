@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
 import requests
 
@@ -48,12 +48,13 @@ class Destination:
 def main():
     destinations = []
     r = requests.get('https://flytrippers.com/blocks/mtl_deals.html')
+    r.encoding = 'utf-8'
     if r.status_code == 200:
         for line in r.text.split('\n'):
             if "class=\"expired\"" not in line:
                 destinations.append(Destination(line))
     else:
-        print "Can't reach website"
+        print("Can't reach website")
 
     max_size_city = 0
     for x in destinations:
@@ -67,7 +68,7 @@ def main():
             price_color = "\x1B[32m"
         elif price_int <= 200:
             price_color = "\x1B[33m"
-        print price_color+dst.price+" \x1B[0m"+dst.city_to+"\x1B[31m"+'\x20'*(max_size_city - len(dst.city_to))+" <--> \x1B[0m"+dst.city_from+"\x1B[31m | "+dst.month+" | \x1B[0m"+dst.link
+        print(price_color+dst.price+" \x1B[0m"+dst.city_to+"\x1B[31m"+'\x20'*(max_size_city - len(dst.city_to))+" <--> \x1B[0m"+dst.city_from+"\x1B[31m | "+dst.month+" | \x1B[0m"+dst.link)
 
 if __name__ == "__main__":
     main()
