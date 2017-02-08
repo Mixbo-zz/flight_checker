@@ -58,9 +58,16 @@ def main():
         print("Can't reach website")
 
     max_size_city = 0
+    max_size_airport = 0
+    max_size_date = 0
     for x in destinations:
         if len(x.city_to) > max_size_city:
             max_size_city = len(x.city_to)
+        if len(x.city_from) > max_size_airport:
+            max_size_airport = len(x.city_from)
+        if len(x.month) > max_size_date:
+            max_size_date = len(x.month)
+
     destinations = sorted(destinations, key=lambda Destination: int(Destination.price[:-1]))
     for dst in destinations:
         price_color = "\x1B[31m"
@@ -72,7 +79,12 @@ def main():
         elif price_int <= 500:
             price_color = "\x1B[34m"
 
-        print(price_color+dst.price+" \x1B[0m"+dst.city_to+"\x1B[31m"+'\x20'*(max_size_city - len(dst.city_to))+" <--> \x1B[0m"+dst.city_from+"\x1B[31m | "+dst.month+" | \x1B[0m"+dst.link)
+        print_price = price_color+dst.price
+        print_to = " \x1B[0m"+dst.city_to+"\x1B[31m"+'\x20'*(max_size_city - len(dst.city_to))
+        print_from = "\x1B[0m"+dst.city_from+'\x20'*(max_size_airport - len(dst.city_from))
+        print_date = "\x1B[31m | "+dst.month+'\x20'*(max_size_date - len(dst.month))+" | \x1B[0m"
+
+        print(print_price+print_to+" <--> "+print_from+print_date+dst.link)
 
 if __name__ == "__main__":
     main()
