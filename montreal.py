@@ -52,7 +52,8 @@ def main():
     if r.status_code == 200:
         for line in r.text.split('\n'):
             if "class=\"expired\"" not in line:
-                destinations.append(Destination(line))
+                if "class=\"deals\"" in line:
+                    destinations.append(Destination(line))
     else:
         print("Can't reach website")
 
