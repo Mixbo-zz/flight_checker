@@ -33,7 +33,9 @@ class Destination:
         self.city_to = city_month.split('/')[0][:-1]
 
         # Month
-        self.month = city_month.split('/')[1][1:]
+        self.month = city_month.split('/')[1]
+        if self.month[0] == "\x20":
+            self.month = self.month[1:]
 
         # Price of flight
         price_beg = html_line.find("class=\"deal_price\"><h2>")+len("class=\"deal_price\"><h2>")
