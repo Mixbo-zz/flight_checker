@@ -21,8 +21,14 @@ class Destination:
         from_beg = html_line.find("class=\"dealtag\">")+len("class=\"dealtag\">")
         from_end = html_line[from_beg:].find("</div><div")+from_beg
         self.city_from = html_line[from_beg:from_end]
-        if self.city_from[:3] == "de ":
+        if "/" in self.city_from:
+            self.city_from = self.city_from.split('/')[1]
+        if self.city_from[:3] == "de " or self.city_from[:4] == " de ":
             self.city_from = self.city_from[3:]
+        if self.city_from[0] == "\x20":
+            self.city_from = self.city_from[1:]
+        if self.city_from == "Mtl":
+            self.city_from = "Montréal"
         #else:
         #    print list(self.city_to[:3])
 
