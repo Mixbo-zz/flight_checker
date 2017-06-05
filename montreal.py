@@ -20,7 +20,8 @@ class Destination:
 
         # Airport of departure
         from_beg = html_line.find("class=\"dealtag\">")+len("class=\"dealtag\">")
-        from_end = html_line[from_beg:].find("</div></div")+from_beg
+#        from_end = html_line[from_beg:].find("</div></div")+from_beg
+        from_end = len(html_line)
         self.city_from = html_line[from_beg:from_end]
 
         if "/" in self.city_from:
@@ -60,10 +61,12 @@ def main():
     r = requests.get('https://flytrippers.com/blocks/mtl_deals.html')
     r.encoding = 'utf-8'
     if r.status_code == 200:
-        for line in r.text.split('\n'):
+        for line in r.text.split("\n"):
             if "class=\"expired\"" not in line:
                 if "class=\"deals\"" in line:
-                    destinations.append(Destination(line))
+                    for x in line.split('</div></div></a></div><div'):
+                        if "mobile-only" not in x:
+                            destinations.append(Destination(x))
     else:
         print("Can't reach website")
 
