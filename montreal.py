@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: utf8 -*-
 
 import requests
 
@@ -19,8 +20,9 @@ class Destination:
 
         # Airport of departure
         from_beg = html_line.find("class=\"dealtag\">")+len("class=\"dealtag\">")
-        from_end = html_line[from_beg:].find("</div><div")+from_beg
+        from_end = html_line[from_beg:].find("</div></div")+from_beg
         self.city_from = html_line[from_beg:from_end]
+
         if "/" in self.city_from:
             self.city_from = self.city_from.split('/')[1]
         if self.city_from[:3] == "de " or self.city_from[:4] == " de ":
@@ -45,7 +47,7 @@ class Destination:
 
         # Price of flight
         price_beg = html_line.find("class=\"deal_price\"><h2>")+len("class=\"deal_price\"><h2>")
-        price_end = html_line.find("$</h2></div>")+1
+        price_end = html_line.find("</h2></div><div class=")
         self.price = html_line[price_beg:price_end]
 
         # Link to possible dates
@@ -76,10 +78,10 @@ def main():
         if len(x.month) > max_size_date:
             max_size_date = len(x.month)
 
-    destinations = sorted(destinations, key=lambda Destination: int(Destination.price[:-1]))
+    destinations = sorted(destinations, key=lambda Destination: int(Destination.price[1:]))
     for dst in destinations:
         price_color = "\x1B[31m"
-        price_int = int(dst.price[:-1])
+        price_int = int(dst.price[1:])
         if price_int <= 100:
             price_color = "\x1B[32m"
         elif price_int <= 200:
